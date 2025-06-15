@@ -28,7 +28,7 @@ app.get('/api/posts/:year/:month', (req, res) => {
 app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id));
     if (!course) { // 404
-        res.status(404).send('The course with the given ID was not found');
+        return res.status(404).send('The course with the given ID was not found');
     }
     res.send(course);
 });
@@ -37,8 +37,7 @@ app.post('/api/courses', (req, res) => {
     const { error } = validateCourse(req.body);
     if(error){
         // bad request
-        res.status(400).send(error.details[0].message);
-        return;
+        return res.status(400).send(error.details[0].message);
     }
 
     const course = {
@@ -61,7 +60,7 @@ app.put('/api/courses/:id', (req, res) => {
     // If not existing, return 404
     const course = courses.find(c => c.id === parseInt(req.params.id));
     if (!course) { // 404
-        res.status(404).send('The course with the given ID was not found');
+        return res.status(404).send('The course with the given ID was not found');
     }
 
     // validate
@@ -71,8 +70,7 @@ app.put('/api/courses/:id', (req, res) => {
     const { error } = validateCourse(req.body);
     if(error){
         // bad request
-        res.status(400).send(error.details[0].message);
-        return;
+        return res.status(400).send(error.details[0].message);
     }
 
     // update course
@@ -80,6 +78,24 @@ app.put('/api/courses/:id', (req, res) => {
     // return the updated course
     res.send(course);
 });
+
+app.delete('/api/courses/:id', (req, res) => {
+    // Look up the course
+    // If not existing, return 404
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) { // 404
+        return res.status(404).send('The course with the given ID was not found');
+    }
+
+    // Delete
+    const index = courses.indexOf(course);
+    courses.splice(index, 1);
+
+    // return the same course
+    res.send(course);
+});
+
+
 
 function validateCourse (course) {
     const schema = {
