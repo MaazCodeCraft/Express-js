@@ -48,12 +48,6 @@ app.post('/api/courses', (req, res) => {
     res.send(course);
 });
 
-// PORT
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
-    console.log(`Listening on port ${port}...`);
-});
 
 app.put('/api/courses/:id', (req, res) => {
     // Look up the course
@@ -62,17 +56,17 @@ app.put('/api/courses/:id', (req, res) => {
     if (!course) { // 404
         return res.status(404).send('The course with the given ID was not found');
     }
-
+    
     // validate
     // if invalid, return 400 - bad request
-
+    
     // object destructuring
     const { error } = validateCourse(req.body);
     if(error){
         // bad request
         return res.status(400).send(error.details[0].message);
     }
-
+    
     // update course
     course.name = req.body.name;
     // return the updated course
@@ -90,7 +84,7 @@ app.delete('/api/courses/:id', (req, res) => {
     // Delete
     const index = courses.indexOf(course);
     courses.splice(index, 1);
-
+    
     // return the same course
     res.send(course);
 });
@@ -104,3 +98,10 @@ function validateCourse (course) {
 
     return Joi.validate(course, schema);
 }
+
+// PORT
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+    console.log(`Listening on port ${port}...`);
+});
