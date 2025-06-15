@@ -4,7 +4,8 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());
-
+app.use(express.urlencoded( { etended: true } )); // key=value&key=value
+app.use(express.static('public'));
 
 app.use(logger);
 
