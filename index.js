@@ -1,3 +1,5 @@
+const debug = require('debug')('app:startup');
+// const dbDebugger = require('debug')('app:db');
 const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
@@ -21,6 +23,16 @@ console.log(`Application name: ${config.get('name')}`);
 console.log(`Mail server: ${config.get('mail.host')}`);
 // console.log(`Mail Password: ${config.get('mail.password')}`);
 
+
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    debug('Morgan enable....');
+}
+
+/*
+// Db Work..
+dbDebugger('Connected to database');
+*/
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
