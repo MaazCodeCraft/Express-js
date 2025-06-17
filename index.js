@@ -8,6 +8,9 @@ const logger = require('./logger');
 const express = require('express');
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 /*
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 console.log(`app: ${app.get('env')}`);
@@ -55,7 +58,7 @@ const courses = [
 ]
 
 app.get('/', (req, res) => {
-    res.send('Hello World!!!');
+    res.render('index', { title: 'My express App', message: 'Hello' });
 });
 
 app.get('/api/courses', (req, res) => {
