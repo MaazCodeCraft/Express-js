@@ -42,8 +42,6 @@ async function getCourses () {
     // and
 
     const courses = await Course
-    // .find({ author: 'Maaz', isPublished: true })
-
     // .find({ price: { $gte: 10, $lte: 20 } })
     // .find({ price: { $in: [10, 15, 20] } })
 
@@ -53,18 +51,18 @@ async function getCourses () {
 
     
     // Starts with Maa
-    .find({ author: /^Maa/ })
+    // .find({ author: /^Maa/ })
 
     // Ends with Rahman
-    .find({author: /Rahman$/i}) // i for case insensitive 
+    // .find({author: /Rahman$/i}) // i for case insensitive 
 
     // Contain Maaz
-    .find({ author: /.*Maaz.*/ })
+    // .find({ author: /.*Maaz.*/ })
 
-
+    .find({ author: 'Maaz', isPublished: true })
     .limit(10)
     .sort({ name: 1 })
-    .select({ name: 1, tags: 1 })
+    .countDocuments();
     console.log(courses);
 }
 
