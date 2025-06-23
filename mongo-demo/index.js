@@ -65,6 +65,7 @@ async function updateCourse(id) {
     // Modify its properties
     // save()
 
+    /*
     const course = await Course.findById(id);
     if(!course) {
         return;
@@ -74,6 +75,18 @@ async function updateCourse(id) {
     
     const result = await course.save();
     console.log(result);
+    */
+
+    // Apporach: update First 
+    // update directly
+    // Optionally: get the update document
+    const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: 'Json',
+            isPublished: false
+        }
+    }, { new: true });
+    console.log(course);
 }
 
 updateCourse('685952ad278fcf590d78a8c7');
