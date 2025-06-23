@@ -16,9 +16,9 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course ({
-        name: "Angular Course",
+        name: "Node Course",
         author: "Maaz",
-        tags: ['Angular', 'Frontened'],
+        tags: ['Node', 'Backend'],
         isPublished: true
     });
     
@@ -29,20 +29,6 @@ async function createCourse() {
 // createCourse();
 
 async function getCourses () {
-    // Comparision
-    // eq(equal)
-    // ne(not equal)
-    // gt(greater than)
-    // gte(greater than or eq to)
-    // lt(less than)
-    // lte(less than or equal to)
-    // in
-    // nin (not in)
-
-    // Logical Opreators
-    // or
-    // and
-
     const pageNumber = 2;
     const pageSize = 10;
     // /api/courses?pageNumber=2&pageSize=10
@@ -73,4 +59,21 @@ async function getCourses () {
     console.log(courses);
 }
 
-getCourses();
+async function updateCourse(id) {
+    // Apporach: Query First 
+    // findById()
+    // Modify its properties
+    // save()
+
+    const course = await Course.findById(id);
+    if(!course) {
+        return;
+    }
+    course.isPublished = true;
+    course.author = 'Another Author';
+    
+    const result = await course.save();
+    console.log(result);
+}
+
+updateCourse('685952ad278fcf590d78a8c7');
