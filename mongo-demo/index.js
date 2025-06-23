@@ -16,15 +16,17 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course ({
-        name: "Express Course",
+        name: "Angular Course",
         author: "Maaz",
-        tags: ['Express', 'backened'],
+        tags: ['Angular', 'Frontened'],
         isPublished: true
     });
     
     const result = await course.save();
     console.log(result);
 }
+
+// createCourse();
 
 async function getCourses () {
     // Comparision
@@ -40,6 +42,10 @@ async function getCourses () {
     // Logical Opreators
     // or
     // and
+
+    const pageNumber = 2;
+    const pageSize = 10;
+    // /api/courses?pageNumber=2&pageSize=10
 
     const courses = await Course
     // .find({ price: { $gte: 10, $lte: 20 } })
@@ -60,7 +66,8 @@ async function getCourses () {
     // .find({ author: /.*Maaz.*/ })
 
     .find({ author: 'Maaz', isPublished: true })
-    .limit(10)
+    .skip((pageNumber - 1) * pageSize)
+    .limit(pageSize)
     .sort({ name: 1 })
     .countDocuments();
     console.log(courses);
